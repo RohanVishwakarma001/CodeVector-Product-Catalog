@@ -1,33 +1,41 @@
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Database, Package, Layers, Zap, TrendingUp, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { StatCard } from '@/components/StatCard';
-import { useStats } from '@/hooks/useStats';
-import { formatCompact } from '@/lib/utils';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Database,
+  Package,
+  Layers,
+  Zap,
+  TrendingUp,
+  Shield,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { StatCard } from "@/components/StatCard";
+import { useStats } from "@/hooks/useStats";
+import { formatCompact } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const features = [
   {
     icon: Zap,
-    title: 'Cursor-Based Pagination',
+    title: "Cursor-Based Pagination",
     description:
-      'Zero duplicates and no missing records. Stable ordering via (updated_at DESC, id DESC) composite cursor survives concurrent inserts.',
-    gradient: 'from-violet-500 to-indigo-500',
+      "Zero duplicates and no missing records. Stable ordering via (updated_at DESC, id DESC) composite cursor survives concurrent inserts.",
+    gradient: "from-violet-500 to-indigo-500",
   },
   {
     icon: TrendingUp,
-    title: '200,000+ Products',
+    title: "200,000+ Products",
     description:
-      'Bulk-seeded with batch processing. Composite indexes on (updatedAt, id) and (category, updatedAt, id) keep queries sub-millisecond.',
-    gradient: 'from-blue-500 to-cyan-500',
+      "Bulk-seeded with batch processing. Composite indexes on (updatedAt, id) and (category, updatedAt, id) keep queries sub-millisecond.",
+    gradient: "from-blue-500 to-cyan-500",
   },
   {
     icon: Shield,
-    title: 'Enterprise Architecture',
+    title: "Enterprise Architecture",
     description:
-      'Clean layered backend (controller → service → repository), TanStack Query infinite scroll, and Intersection Observer on the frontend.',
-    gradient: 'from-emerald-500 to-green-500',
+      "Clean layered backend (controller → service → repository), TanStack Query infinite scroll, and Intersection Observer on the frontend.",
+    gradient: "from-emerald-500 to-green-500",
   },
 ];
 
@@ -65,8 +73,9 @@ export default function HomePage() {
           </h1>
 
           <p className="mx-auto mb-10 max-w-2xl text-lg text-white/50 leading-relaxed">
-            Browse 200,000+ products with zero duplicates, zero missing records, and instant
-            infinite scroll — powered by cursor-based pagination and Neon PostgreSQL.
+            Browse 200,000+ products with zero duplicates, zero missing records,
+            and instant infinite scroll — powered by cursor-based pagination and
+            Neon PostgreSQL.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -78,7 +87,7 @@ export default function HomePage() {
             </Button>
             <Button asChild variant="secondary" size="lg">
               <a
-                href="https://github.com"
+                href="https://github.com/RohanVishwakarma001/CodeVector-Product-Catalog"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -95,7 +104,10 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {isLoading ? (
               Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6">
+                <div
+                  key={i}
+                  className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6"
+                >
                   <Skeleton className="mb-2 h-4 w-28" />
                   <Skeleton className="h-8 w-20" />
                 </div>
@@ -104,21 +116,21 @@ export default function HomePage() {
               <>
                 <StatCard
                   label="Total Products"
-                  value={stats ? formatCompact(stats.totalProducts) : '—'}
+                  value={stats ? formatCompact(stats.totalProducts) : "—"}
                   icon={Package}
                   gradient="from-violet-500 to-indigo-500"
                   delay={0.1}
                 />
                 <StatCard
                   label="Categories"
-                  value={stats ? String(stats.categories) : '—'}
+                  value={stats ? String(stats.categories) : "—"}
                   icon={Layers}
                   gradient="from-blue-500 to-cyan-500"
                   delay={0.2}
                 />
                 <StatCard
                   label="Database Size"
-                  value={stats?.dbSize ?? '—'}
+                  value={stats?.dbSize ?? "—"}
                   icon={Database}
                   gradient="from-emerald-500 to-green-500"
                   delay={0.3}
@@ -155,8 +167,12 @@ export default function HomePage() {
                 >
                   <f.icon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-base font-semibold text-white">{f.title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{f.description}</p>
+                <h3 className="mb-2 text-base font-semibold text-white">
+                  {f.title}
+                </h3>
+                <p className="text-sm text-white/50 leading-relaxed">
+                  {f.description}
+                </p>
               </motion.div>
             ))}
           </div>
