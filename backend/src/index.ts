@@ -18,9 +18,19 @@ app.use(helmet());
 app.use(compression());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
+const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:5173')
+  .split(',')
+  .map((o) => o.trim());
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin ?? allowedOrigins[0]);
+      } else {
+        callback(new Error(`CORS: origin ${origin} not allowed`));
+      }
+    },
     methods: ['GET'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
@@ -48,6 +58,17 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} [${process.env.NODE_ENV ?? 'development'}]`);
+
+  if (process.env.NODE_ENV === 'production' && process.env.RENDER_EXTERNAL_URL) {
+    const pingUrl = `${process.env.RENDER_EXTERNAL_URL}/health`;
+    setInterval(async () => {
+      try {
+        await fetch(pingUrl);
+      } catch {
+        // ignore — next interval will retry
+      }
+    }, 14 * 60 * 1000); // every 14 minutes (Render idles after 15)
+  }
 });
 
 export default app;
